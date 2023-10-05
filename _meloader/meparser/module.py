@@ -44,7 +44,7 @@ class MeHuffmanModuleConstruct(Construct):
         hash = sha256.digest()
         if hash != context.hash[::-1]:
             open(context.name, 'wb').write(scratch)
-            raise ConstructError('Hash does not match: %s' % context.name)
+            raise ConstructError(f'Hash does not match: {context.name}')
 
         return scratch
 
@@ -65,7 +65,7 @@ class MeLzmaModuleConstruct(Construct):
         elif sys.platform.startswith('win'):
             cmd = '"C:\\Program Files\\7-zip\\7z.exe" x -so %s >%s 2>Z:\\tmp\\7z.log'
         else:
-            raise Exception('Do not know how to decompress LZMA on %s' % sys.platform)
+            raise Exception(f'Do not know how to decompress LZMA on {sys.platform}')
 
         import tempfile
         import os
@@ -83,7 +83,7 @@ class MeLzmaModuleConstruct(Construct):
         hash = sha256.digest()
         if hash != context.hash[::-1]:
             open(context.name, 'wb').write(decompressed)
-            raise ConstructError('Hash does not match: %s' % context.name)
+            raise ConstructError(f'Hash does not match: {context.name}')
 
         return decompressed
 
@@ -104,7 +104,7 @@ class MePlainModuleConstruct(Construct):
         hash = sha256.digest()
         if hash != context.hash[::-1]:
             open(context.name, 'wb').write(data)
-            raise ConstructError('Hash does not match: %s' % context.name)
+            raise ConstructError(f'Hash does not match: {context.name}')
 
         return data
 

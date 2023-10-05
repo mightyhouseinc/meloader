@@ -70,7 +70,7 @@ def get_codeblock(ea):
 
 
 def make_name(ea, name):
-    return MakeName(ea, SegName(ea) + '_' + name)
+    return MakeName(ea, f'{SegName(ea)}_{name}')
 
 
 def add_seg(start, size, name):
@@ -97,7 +97,7 @@ def prefixed(prefix, name):
 
 
 def mirrord(d):
-    return dict(((v, k) for k, v in d.iteritems()))
+    return {v: k for k, v in d.iteritems()}
 
 
 def collect_args(regs, n):
@@ -112,4 +112,4 @@ def has_xref_to(func, item, flags=0):
 
 
 def collect_xrefs_to(func, item, flags=0):
-    return list(xref for xref in XrefsTo(item) if get_func(xref.frm).startEA == func)
+    return [xref for xref in XrefsTo(item) if get_func(xref.frm).startEA == func]

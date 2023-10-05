@@ -94,8 +94,7 @@ def _version_as_str(region):
 def _add_rapi(version):
     base, size, _, _ = RAPI.get(version, (0x20000000, 0x1000, None, None))
 
-    rapi = add_seg(base, size, 'RAPI')
-    return rapi
+    return add_seg(base, size, 'RAPI')
 
 
 def _analyze_rapi(rapi, version):
