@@ -32,9 +32,6 @@ def trace_mem_access(start, end, regs):
                 except ValueError:
                     pass
 
-        elif GetMnem(insn).startswith('st'):
-            pass
-
     return mem_access
 
 

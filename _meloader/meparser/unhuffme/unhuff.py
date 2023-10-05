@@ -83,7 +83,7 @@ def fashhuff(huff, outlen, dict, shape):
             s = 8 - (pos & 7)
             t = ord(huff[pos >> 3])
             t = mls(t, msub(8, s))
-            s = symlen if s > symlen else s
+            s = min(s, symlen)
             t >>= 8 - s
             bitbuf = mls(bitbuf, s)
             bitbuf |= t

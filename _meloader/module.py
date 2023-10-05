@@ -95,7 +95,7 @@ class MeModule:
 
     def _analyze_kapi(self):
         if self.version not in KAPI:
-            Warning('No KAPI for version %s' % self.version)
+            Warning(f'No KAPI for version {self.version}')
             return
 
         _, _, names, decls = KAPI[self.version]
@@ -171,8 +171,7 @@ def load_module(blob, name, version, base, memory_size, has_kapi):
 
     code = add_seg(base, len(blob), prefixed(name, 'CODE'))
 
-    data_start = _guess_data_start(code)
-    if data_start:
+    if data_start := _guess_data_start(code):
         data_size = code.endEA - data_start
         code.endEA = data_start
         data = add_seg(data_start, data_size, prefixed(name, 'DATA'))
@@ -191,16 +190,12 @@ def _guess_data_start(code):
     # it never works for the first time
     MakeUnknown(last_func_ea, last_func_end - last_func_ea, FF_UNK)
 
-    data_start = None
-    for ea in range(last_func_end, code.endEA):
-        if Dword(ea) == 0:
-            data_start = ea
-            break
-
-    if not data_start:
+    if data_start := next(
+        (ea for ea in range(last_func_end, code.endEA) if Dword(ea) == 0), None
+    ):
+        return data_start + 4
+    else:
         return
-
-    return data_start + 4
 
 
 def _calc_import_table_length(addr, bss):

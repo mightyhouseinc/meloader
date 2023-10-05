@@ -20,8 +20,7 @@ def find_writes(ea):
 
 
 def _get_codeblock(ea):
-    func = get_func(ea)
-    if func:
+    if func := get_func(ea):
         fc = FlowChart(f=func)
         for cb in fc:
             if cb.startEA <= ea <= cb.endEA:
